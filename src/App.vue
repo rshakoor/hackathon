@@ -2,7 +2,12 @@
   <v-app>
 
     <TopToolbar></TopToolbar>
-      <router-view />
+    <v-content>
+
+     <router-view />
+   
+   
+    </v-content>
     <BottomNav></BottomNav>
 
 
