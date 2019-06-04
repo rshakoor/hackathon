@@ -7,18 +7,7 @@
       <v-toolbar-title class="white--text">Wiser Together</v-toolbar-title>
 
     </v-toolbar>
-    <v-navigation-drawer permanent>
-          <v-toolbar flat>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-title class="title">
-                  Application
-                </v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-toolbar>
-
-          <v-divider></v-divider>
+    <v-navigation-drawer v-model="drawer" fixed app clipped>
 
           <v-list dense class="pt-0">
             <v-list-tile
@@ -41,14 +30,24 @@
 </template>
 <script>
 export default {
+  methods: {
+    toggleMenu: function() {
+      if (this.drawer) { 
+        this.drawer = false;
+      } else {
+        this.drawer = true;
+      }
+    }
+  },  
 data () {
     return {
       items: [
-        { title: 'Game', icon: 'dashboard', link: 'game' },
-        { title: 'Study Group', icon: 'question_answer', link: 'studygroup' },
-        { title: 'Analytics', icon: 'question_answer', link: 'analytics' },
+        { title: 'Game', icon: 'fas fa-gamepad', link: 'game' },
+        { title: 'Study Group', icon: 'fas fa-users', link: 'studygroup' },
+        { title: 'My Progress', icon: 'fas fa-chart-line', link: 'analytics' },
       ],
-      right: null
+      right: null,
+      drawer: false
     }
   }
 }

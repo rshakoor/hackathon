@@ -1,5 +1,5 @@
 <template>
-    <div>
-        Game
-    </div>
+
+        <span>Game</span>
+
 </template>
