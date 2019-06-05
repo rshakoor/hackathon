@@ -8,7 +8,7 @@
    
    
     </v-content>
-    <BottomNav></BottomNav>
+
 
 
   </v-app>
