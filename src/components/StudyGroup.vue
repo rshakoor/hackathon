@@ -1,7 +1,8 @@
 
    <template>
-    <v-layout  row wrap>
-    <v-flex xs12 sm12 md6>
+   <v-container fill-height fluid>
+    <v-layout row wrap>
+    <v-flex xs-12 height="100%" >
       <v-card>
         <v-img contain="true" src="http://www.trespassmag.com/wp-content/uploads/2010/06/a_team_xlg1.jpg"
         ></v-img>
@@ -41,9 +42,17 @@
     <v-icon small class="ma-1">fas fa-play</v-icon>Start Session
   </v-btn>
 </div>
-      </v-flex>  
-     </v-layout>
 
+
+  <v-footer v-if="this.inSession" absolute
+    height="auto"
+    color="primary lighten-1">
+ 
+ 
+  </v-footer>
+  </v-flex>
+     </v-layout>
+    </v-container>
     </template>
     <script>
     export default {
@@ -68,3 +77,17 @@
     }
     }   
     </script>
+<style lang="stylus" scoped>
+.bottom-container {
+    position: absolute;
+    margin: none;
+    padding: none;
+    width: 100%;
+    bottom: 0;
+
+}
+.border {
+    border: 1px solid red;
+}
+
+</style>
