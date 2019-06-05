@@ -4,7 +4,7 @@
 
       <v-toolbar-side-icon @click.stop="toggleMenu"></v-toolbar-side-icon>
 
-      <v-toolbar-title class="white--text">Wiser Together</v-toolbar-title>
+      <v-toolbar-title class="pa-0 ma-0 white--text change-font" >W!ser Together </v-toolbar-title>
 
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" fixed app clipped>
@@ -52,3 +52,13 @@ data () {
   }
 }
 </script>
+<style lang="stylus" scoped>
+.change-font {
+    font-family: "Rubik", Helvetica, sans-serif;
+    font-size:150%;
+}
+.logo-image {
+  height: 35px;
+}
+
+</style>
