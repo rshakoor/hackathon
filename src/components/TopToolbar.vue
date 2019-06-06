@@ -42,7 +42,7 @@ export default {
 data () {
     return {
       items: [
-        { title: 'My Study Plan', icon: 'fas fa-gamepad', link: 'game' },
+        { title: 'My Study Plan', icon: 'fas fa-gamepad', link: 'studyplan' },
         { title: 'My Study Group', icon: 'fas fa-users', link: 'studygroup' },
         { title: 'My Progress', icon: 'fas fa-chart-line', link: 'analytics' },
       ],

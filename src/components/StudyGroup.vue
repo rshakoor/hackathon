@@ -83,6 +83,7 @@
                                     </v-btn>
                                     <v-toolbar-title>{{sessionItem.tagline}}</v-toolbar-title>
                                     </v-toolbar>
+
                                 </v-card>
                               </v-dialog>
                     
@@ -109,7 +110,7 @@
                      Start Session
                   </v-btn>
                   <v-btn v-if="this.inSession && !this.inGames" small color="warning" @click="this.startGames">
-                     Start Games
+                     Start Game
                   </v-btn>
                   <v-btn v-if="this.inSession && !this.inReview" small color="blue" @click="this.startReview">
                      Start Review
@@ -141,7 +142,7 @@
          this.inReview = true;
          this.inGames = false;
          var item = new Object();
-         item.tagline = "Time to Review";
+         item.tagline = "Review Answers";
          item.type = "Review"
          item.start = new Date();
          this.sessionItems.push(item);
@@ -151,7 +152,7 @@
          this.inReview = false;
         var item = new Object();
          item.type = "Games";
-         item.tagline = "Let's play!"
+         item.tagline = "Quiz Time!"
          item.start = new Date();
          this.sessionItems.push(item);
        },

@@ -66,14 +66,14 @@
 <style>
     @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
 
-    body{
-        font-size: 20px;
+   body{
+        font-size: 16px;
         font-family: 'Work Sans', sans-serif;
         color: #333;
     font-weight: 300;
     text-align: center;
     background-color: #f8f6f0;
-    }
+    } 
     h1{
     font-weight: 300;
     margin: 0px;
