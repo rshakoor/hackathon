@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import Game from './components/Game.vue'
-import Login from './components/Login.vue'
-import Logout from './components/Logout.vue'
 import Analytics from './components/Analytics.vue'
 import StudyGroup from './components/StudyGroup.vue'
 import StudyPlan from './components/StudyPlan.vue'
@@ -15,16 +13,6 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Home
-        },
-        {
-            path: '/logout',
-            name: 'logout',
-            component: Logout
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login
         },
         {
             path: '/game',
