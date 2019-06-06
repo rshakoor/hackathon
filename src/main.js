@@ -6,7 +6,6 @@ import store from './store'
 import '@fortawesome/fontawesome-free/css/all.css'
 import './registerServiceWorker'
 import 'vuetify/dist/vuetify.min.css'
-
 Vue.config.productionTip = false
 
 

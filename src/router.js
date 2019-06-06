@@ -6,6 +6,7 @@ import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Analytics from './components/Analytics.vue'
 import StudyGroup from './components/StudyGroup.vue'
+import StudyPlan from './components/StudyPlan.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +35,11 @@ export default new Router({
             path: '/analytics',
             name: 'Analytics',
             component: Analytics
+        },
+        {
+            path: '/studyplan',
+            name: 'studyplan',
+            component: StudyPlan
         },
         {
             path: '/studygroup',

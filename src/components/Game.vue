@@ -1,118 +1,136 @@
 <template>
-    <div id ="quiz">
-        Game
-  
-        <div v-if="introStage">
-            <h1>Welcome to the Quiz: {{title}}</h1>
-            <p>Some kind of text here. Blah blah.</p>
-            <button @click="startQuiz">START!</button>
-        </div>
-  
-        <div v-if="questionStage">
-            <question 
-                    :question="questions[currentQuestion]"
-                    v-on:answer="handleAnswer"
-                    :question-number="currentQuestion+1"
-            ></question>
-        </div>
-  
-        <div v-if="resultsStage">
-            You got {{correct}} right out of {{questions.length}} questions. Your percentage is {{perc}}%.
-        </div>
-  
-
-        <script type="application/javascript"> 
-
-
-            const quizData = '{"title":"Test Quiz","questions":[{"text":"Is true true?","type":"tf","answer":"t"},{"text":"Is false true?","type":"tf","answer":"f"},{"text":"What is the best beer?","type":"mc","answers":["Coors","Miller","Bud","Anchor Steam"],"answer":"Anchor Steam"},{"text":"What is the best cookie?","type":"mc","answers":["Chocolate Chip","Sugar","Beer"],"answer":"Sugar"}]}';
-
-            Vue.component('question', {
-                template:`
-            <div>
-            <strong>Question {{ questionNumber }}:</strong><br/>
-            <strong>{{ question.text }} </strong>
-
-            <div v-if="question.type === 'tf'">
-                <input type="radio" name="currentQuestion" id="trueAnswer" v-model="answer" value="t"><label for="trueAnswer">True</label><br/>
-                <input type="radio" name="currentQuestion" id="falseAnswer" v-model="answer" value="f"><label for="falseAnswer">False</label><br/>
+  <v-layout row fill-height>
+    <v-flex xs12 sm6 offset-sm3 fill-height>
+      <v-card class="flexcard" height="100%">
+        <v-toolbar color="cyan" dark>
+          <v-toolbar-title>{{quiz.name}}</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text class="grow">
+          <div v-if="state == 'start'">
+            Welcome to the quiz of Important Information
+          </div>
+          <div v-else-if="state == 'end'">
+            You got {{this.questionsRight}} out of {{this.totalQuestions}}.
+          </div>
+          <div v-else>
+            <div class="question-number">Question {{currentQuestion.number}}</div>
+            <div class="question">
+              {{currentQuestion.text}}
             </div>
-
-            <div v-if="question.type === 'mc'">
-                <div v-for="(mcanswer,index) in question.answers">
-                <input type="radio" :id="'answer'+index" name="currentQuestion" v-model="answer" :value="mcanswer"><label :for="'answer'+index">{{mcanswer}}</label><br/>
-                </div>
-            </div>
-
-            <button @click="submitAnswer">Answer</button>
-            </div>
-            `,
-            data() {
-                return {
-                answer:''
-                }
-            },
-                props:['question','question-number'],
-                methods:{
-                    submitAnswer:function() {
-                        this.$emit('answer', {answer:this.answer});
-                this.answer = null;
-                    }
-                }
-            });
-
-            const app = new Vue({
-            el:'#quiz',
-            data() {
-                return {
-                introStage:false,
-                questionStage:false,
-                resultsStage:false,
-                title:'',
-                questions:[],
-                currentQuestion:0,
-                answers:[],
-                correct:0,
-                perc:null
-                }
-            },
-            created() {
-                fetch(quizData)
-                .then(res => res.json())
-                .then(res => {
-                this.title = res.title;
-                this.questions = res.questions;
-                this.introStage = true;
-                })
-
-            },
-            methods:{
-                startQuiz() {
-                this.introStage = false;
-                this.questionStage = true;
-                console.log('test'+JSON.stringify(this.questions[this.currentQuestion]));
-                },
-                handleAnswer(e) {
-                console.log('answer event ftw',e);
-                this.answers[this.currentQuestion]=e.answer;
-                if((this.currentQuestion+1) === this.questions.length) {
-                    this.handleResults();
-                    this.questionStage = false;
-                    this.resultsStage = true;
-                } else {
-                    this.currentQuestion++;
-                }
-                },
-                handleResults() {
-                console.log('handle results');
-                this.questions.forEach((a, index) => {
-                    if(this.answers[index] === a.answer) this.correct++;        
-                });
-                this.perc = ((this.correct / this.questions.length)*100).toFixed(2);
-                console.log(this.correct+' '+this.perc);
-                }
-            }
-            })
-        </script>
-    </div>
-
+            <ul class="answers">
+              <li v-for="(answer, index) in currentQuestion.answers" :key="index" @click="selectAnswer(answer)" :class="answer === selectedAnswer ? 'selected' : ''">{{answer}}</li>
+            </ul>
+          </div>
+        </v-card-text>
+        <v-card-actions>
+          <div v-if="state == 'start'">
+            <v-btn @click="startQuiz()">Start Quiz</v-btn>
+          </div>
+          <div v-else-if="state == 'end'">
+            <v-btn @click="endQuiz()">End Quiz</v-btn>
+          </div>
+          <div v-else>
+            <v-btn :disabled="!this.selectedAnswer" @click="nextQuestion()">Next</v-btn>
+          </div>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
+
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+  body{
+      font-size: 16px;
+      font-family: 'Work Sans', sans-serif;
+      color: #333;
+  font-weight: 300;
+  background-color: #f8f6f0;
+  }
+
+  .flexcard {
+    display: flex;
+    flex-direction: column;
+  }
+  .selected {
+    background-color: #ccc;
+  }
+  .question-number {
+    font-style: italic;
+    font-size: 90%;
+    margin-bottom: 1rem;
+  }
+
+  .question {
+    margin-bottom: 1rem;
+  }
+
+  .answers {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .answers li {
+    border: 1px solid black;
+    padding: 1rem;
+  }
+
+</style>
+
+
+<script type="application/javascript"> 
+  import questionDb from '../questions.json'
+  import router from '../router'
+
+  export default {
+    methods: {
+      startQuiz: function() {
+        this.randomQuestions = this.questions.map( question => {
+          question.rand = Math.random();
+          return question;
+        });
+        this.randomQuestions.sort((left, right) => left.rand - right.rand);
+        this.randomQuestions = this.randomQuestions.slice(0, 10);
+        for (let i = 0; i < this.randomQuestions.length; i++) this.randomQuestions[i].number = i + 1;
+
+        this.currentQuestion = this.randomQuestions[0];
+        this.state = 'going';
+      },
+
+      nextQuestion: function() {
+        if (this.currentQuestion.answer == this.selectedAnswer) this.questionsRight++;
+        
+        this.selectedAnswer = null;
+        this.randomQuestions = this.randomQuestions.slice(1);
+        this.totalQuestions++;
+        if (this.randomQuestions.length > 0) {
+          this.currentQuestion = this.randomQuestions[0];
+        }
+        else {
+          this.state = 'end';
+        }
+      },
+
+      endQuiz: function() {
+        router.go(-1);
+      },
+
+      selectAnswer: function(answer) {
+        this.selectedAnswer = answer;
+      }
+    },
+    data() {
+      return {
+        quiz: this.$route.params.quiz,
+        state: 'start',
+        questions: questionDb.questions.filter( question => this.$route.params.quiz.topicCodes.includes(question.topiccode) ),
+        currentQuestion: null,
+        selectedAnswer: null,
+        questionsRight: 0,
+        totalQuestions: 0,
+      }
+    }
+  }
+</script>
