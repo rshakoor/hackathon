@@ -4,9 +4,9 @@
 
       <v-toolbar-side-icon @click.stop="toggleMenu"></v-toolbar-side-icon>
 
-      <v-toolbar-title class="pa-0 ma-0 white--text change-font" >W!ser Together </v-toolbar-title>
+      <v-toolbar-title class="pa-0 ma-0 white--text change-font" >W!ser Together</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items>
         <v-btn v-if="authenticated" v-on:click="logout" flat>LOGOUT</v-btn>
         <v-btn v-else v-on:click="login" flat>LOGIN</v-btn>
       </v-toolbar-items>
@@ -75,7 +75,7 @@ export default {
             
             console.log(clientApplication.getAccount());
             this.authenticated = true;
-            this.$router.replace({name: 'home'});
+            this.refreshPage();
         }).catch (function (error) {
             console.log("Error during login:\n" + error);
         });
@@ -84,6 +84,10 @@ export default {
         clientApplication.logout();
         this.authenticated = false;
         this.$router.replace({name: 'home'});
+    },
+    refreshPage: function(){
+      this.$router.go();
+      console.log("page refreshed");
     }
   },
   mounted(){
@@ -101,9 +105,10 @@ export default {
   data () {
     return {
       items: [
+        { title: 'Home', icon: 'fas fa-home', link: '' },
         { title: 'My Study Plan', icon: 'fas fa-gamepad', link: 'studyplan' },
         { title: 'My Study Group', icon: 'fas fa-users', link: 'studygroup' },
-        { title: 'My Progress', icon: 'fas fa-chart-line', link: 'analytics' },
+        { title: 'My Progress', icon: 'fas fa-chart-line', link: 'analytics' }
       ],
       right: null,
       drawer: false,

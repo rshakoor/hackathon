@@ -3,12 +3,15 @@
         <div v-if="authenticated">
             <h1 v-if="userSession.getAccount().idToken.extension_Role == 'Student'">Student Portal</h1>
             <h1 v-else>Teacher Portal</h1>
-            <h2>Welcome: {{userSession.getAccount().name}}</h2>
+            <h2 style="color: grey">Welcome: {{userSession.getAccount().name}}</h2>
         </div>
-        <h1 v-else>You are not logged in...</h1>
+        <div v-else>
+            <h1>W!SE Portal</h1>
+            <h3 style="color: grey">You are not logged in...</h3>
+        </div>
     </div>
 </template>
-
+    
 
 <script>
 import * as Msal from 'msal';
