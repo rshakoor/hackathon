@@ -25,7 +25,7 @@ export default new Router({
         },
         {
             path: '/studyplan',
-            name: 'Study Plan',
+            name: 'studyplan',
             component: StudyPlan
         },
         {

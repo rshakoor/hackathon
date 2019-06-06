@@ -1,6 +1,5 @@
 <template>
-   <v-container fill-height fluid>
-      <v-layout row wrap>
+      <v-layout row>
          <v-flex xs-12 height="100%" >
             <v-card>
                <v-img v-if="!this.inSession" contain src="http://www.trespassmag.com/wp-content/uploads/2010/06/a_team_xlg1.jpg"
@@ -25,22 +24,13 @@
                      </div>
                   </div>
                </v-card-title>
-               <v-card-actions>
-               </v-card-actions>
 
               
-              <div v-if="this.inSession && this.showTimeLine">
-               <v-card dark flat>
-     
-                  <v-container fill-height>
-                     <v-layout align-center>
-                        <v-layout column justify-end>
-                           <div class="headline font-weight-light">Monday</div>
-                           <div class="text-uppercase font-weight-light">{{this.formatDate(this.sessionStartDate)}}</div>
-                        </v-layout>
-                     </v-layout>
-                  </v-container>
-                  </v-img>
+            <div v-if="this.inSession && this.showTimeLine">
+              <v-card dark flat>
+                <v-toolbar color="cyan" dark>
+                  <v-toolbar-title>{{this.formatDate(this.sessionStartDate)}}</v-toolbar-title>
+                </v-toolbar>
                </v-card>
                <v-card-text class="py-0">
                   <v-timeline
@@ -120,12 +110,10 @@
          </v-flex>
 
       </v-layout>
-      
-
-      
-   </v-container>
 </template>
 <script>
+  import router from '../router'
+
    export default {
    methods: {
        toggleSession: function() {
@@ -155,6 +143,9 @@
          item.tagline = "Quiz Time!"
          item.start = new Date();
          this.sessionItems.push(item);
+       },
+       loadQuiz: function() {
+         router.push({ name: 'game', params: {quiz: {name: 'Study group quiz', topicCodes: ['I', 'II', 'III', 'IV', 'V']}} });
        },
        formatDate: function(date) {
          var monthNames = [
